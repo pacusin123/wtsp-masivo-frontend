@@ -87,11 +87,19 @@
   margin-bottom: 16px;
 }
 
-.modal input[type="text"],
-.modal textarea {
+.modal input[type="text"] {
   width: 100%;
   padding: 10px;
   margin-bottom: 12px;
+  border-radius: 6px;
+  background-color: #222;
+  color: #fff;
+  border: 1px solid #444;
+}
+
+.modal textarea {
+  width: 100%;
+  padding: 10px;
   border-radius: 6px;
   background-color: #222;
   color: #fff;
@@ -125,4 +133,12 @@
 .modal-actions button[type="button"] {
   background-color: #444;
   color: #fff;
+}
+
+.info-message {
+  font-size: 12px;          /* Más pequeño */
+  color: rgba(149 149 149 / 60%); /* Gris semitransparente */
+  margin-bottom: 12px;
+  display: block;
+  font-style: italic;       /* Opcional, estilo informativo */
 }

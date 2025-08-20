@@ -188,6 +188,7 @@ export default function MessagesManager() {
                 required
                 onChange={(e) => setMsgText(e.target.value)}
               />
+              <div className="info-message">Agrega @nombre, @variable1, @variable2 o @variable3 para reemplazar en su mensaje</div>
               <input
                 type="file"
                 accept="image/*"
