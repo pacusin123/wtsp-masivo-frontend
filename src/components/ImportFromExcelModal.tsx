@@ -23,10 +23,14 @@ const ImportFromExcelModal: React.FC<Props> = ({ onClose, onImport }) => {
   };
 
   const handleDownloadTemplate = () => {
-    const link = document.createElement("a");
-    link.href = "/ejempplo.xlsx"; // asegúrate de copiar tu Excel a la carpeta `public`
-    link.download = "ejemplo.xlsx";
-    link.click();
+    const url = `${import.meta.env.BASE_URL}ejemplo.xlsx`; // concatena con la base
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "ejemplo.xlsx";
+    a.rel = "noopener";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
   };
 
   return (
