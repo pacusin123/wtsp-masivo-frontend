@@ -24,6 +24,7 @@ const ImportFromExcelModal: React.FC<Props> = ({ onClose, onImport }) => {
 
   const handleDownloadTemplate = () => {
     const url = `${import.meta.env.BASE_URL}ejemplo.xlsx`; // concatena con la base
+    console.log(url);
     const a = document.createElement("a");
     a.href = url;
     a.download = "ejemplo.xlsx";
