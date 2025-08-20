@@ -104,7 +104,8 @@ export default function SendMessage() {
     });
     if (!res) return;
     if (res.ok) {
-      setNotification({ message: `El envio de mensajes a sido iniciado...`, type: "info", duration: 2000 });
+      const data = await res.json();
+      setNotification({ message: data.message, type: "info", duration: 2000 });
 
     } else {
       setNotification({ message: `Error al enviar mensajes`, type: "error", duration: 2000 });
