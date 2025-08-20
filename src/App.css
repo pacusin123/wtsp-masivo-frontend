@@ -1,0 +1,105 @@
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Estructura de layout general */
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #121212;
+  color: #fff;
+}
+
+/* Menú lateral */
+.menu {
+  width: 250px;
+  background-color: #2a2a2a;
+  padding: 20px;
+  flex-shrink: 0;
+}
+
+/* Contenido principal */
+.main-content {
+  flex: 1;
+  padding: 32px;
+  overflow-y: auto;
+  width: 100%; /* <- importante */
+}
+
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  position: absolute;
+  right: 0;
+  top: 110%;
+  background-color: #1e1e1e;
+  min-width: 200px;
+  border: 1px solid #444;
+  border-radius: 8px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+
+.dropdown-content button,
+.dropdown-content label {
+  padding: 10px;
+  background: none;
+  color: #fff;
+  border: none;
+  text-align: left;
+  width: 100%;
+}
+
+.dropdown-content button:hover,
+.dropdown-content label:hover,
+.dropdown-option:hover {
+  background-color: #333;
+}
+
+.dropdown-option {
+  cursor: pointer;
+}
+

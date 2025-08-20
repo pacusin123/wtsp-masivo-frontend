@@ -1,0 +1,42 @@
+# Dependencias
+/node_modules
+
+# Compilados y builds
+/dist
+/build
+
+# Archivos de log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.log
+
+# Archivos de entorno (sensibles)
+.env
+.env.*        # si tienes varios .env (ej: .env.local, .env.development)
+
+# Configuraciones de sistema/IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json  # puedes versionar extensiones recomendadas
+
+# Archivos temporales
+*.swp
+*.swo
+*.sw?
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Archivos de coverage/testing
+coverage
+*.lcov
+
+# Archivos de caché
+.cache
+.parcel-cache
+vite.config.ts.timestamp-*

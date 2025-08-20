@@ -1,0 +1,88 @@
+/* Igual que tu modal de editar, reutilizable */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.modal.modern {
+  background: #1e1e1e;
+  color: #fff;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.modal-header,
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h2 {
+  margin: 0;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn-save,
+.btn-delete,
+.btn-cancel {
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease-in-out;
+}
+
+.btn-cancel {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #777;
+}
+
+.btn-delete {
+  background: #d32f2f;
+  color: white;
+  border: none;
+}
+
+.btn-delete:hover {
+  background: #b71c1c;
+}
+
+.btn-save {
+  background: #4caf50;
+  color: white;
+  border: none;
+}
+
+.btn-save:hover {
+  background: #4caf50;
+}
+
+.excel-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}

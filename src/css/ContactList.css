@@ -1,0 +1,86 @@
+.contact-list-wrapper {
+  color: #eee;
+}
+
+.group-name {
+  color: #20f573;
+}
+
+.add-contact-button {
+  background: #2abf77;
+  color: #fff;
+  border: none;
+  padding: 7px 18px;
+  border-radius: 7px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.modal-overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #232;
+  border-radius: 12px;
+  padding: 32px;
+  min-width: 320px;
+  box-shadow: 0 0 16px #000;
+}
+
+.close-button {
+  margin-top: 18px;
+  width: 100%;
+  background: #333;
+  color: #fff;
+  border-radius: 7px;
+}
+
+.contact-table {
+  width: 100%;
+  border-spacing: 0;
+  font-size: 16px;
+}
+
+.contact-table th {
+  background: #232;
+  color: #90ffb2;
+  padding: 6px;
+}
+
+.contact-table th:first-child {
+  border-radius: 6px 0 0 6px;
+}
+
+.contact-table th:last-child {
+  border-radius: 0 6px 6px 0;
+}
+
+.editing-row {
+  background: #343;
+}
+
+.no-contacts {
+  color: #999;
+  text-align: center;
+}
+
+.success-message {
+  color: #1cc778;
+  margin-top: 10px;
+}
+
+.delete-button {
+  color: #f88;
+}
