@@ -74,7 +74,7 @@ export default function App() {
               <Route path="/send-message" element={<SendMessage />} />
               <Route path="/reports" element={<Reports />} />
               <Route path="/login" element={<Navigate to="/whatsapp" />} />
-              <Route path="/register" element={<Navigate to="/whatsapp" />} />
+              {/* <Route path="/register" element={<Navigate to="/whatsapp" />} /> */}
               <Route path="*" element={<Navigate to="/whatsapp" />} />
             </Routes>
           </div>
@@ -82,7 +82,7 @@ export default function App() {
       ) : (
         <Routes>
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
-          <Route path="/register" element={<Register />} />
+          {/* <Route path="/register" element={<Register />} /> */}
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       )}

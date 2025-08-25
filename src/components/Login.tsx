@@ -64,7 +64,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, loading }) => {
         </form>
         <div className="login-footer">
           ¿No tienes cuenta?
-          <Link to="/register">Crear usuario</Link>
+          <Link to="/">Crear usuario</Link>
         </div>
       </div>
     </div>
