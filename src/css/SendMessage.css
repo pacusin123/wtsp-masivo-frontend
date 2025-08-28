@@ -149,3 +149,17 @@
   cursor: pointer;
   height: 42px;
 }
+
+.stop-button {
+  background-color: #e53935;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  height: 42px;
+  cursor: pointer;
+}
+.stop-button:disabled, .send-button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}

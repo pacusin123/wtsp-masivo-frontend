@@ -4,7 +4,7 @@ import WhatsappConnection from "./components/WhatsappConnection";
 import ContactsUpload from "./components/ContactsUpload";
 import SendMessage from "./components/SendMessage";
 import Reports from "./components/Reports";
-import Register from "./components/Register";
+// import Register from "./components/Register";
 import Login from "./components/Login";
 import { useState, useEffect } from "react";
 import "./App.css";

@@ -27,6 +27,7 @@ interface SendProgress {
   total: number;
   status: "enviado" | "error";
   error?: string;
+  sendingId: number;
 }
 
 export default function SendMessage() {
@@ -41,6 +42,8 @@ export default function SendMessage() {
     type?: "success" | "error" | "info";
     duration: number;
   } | null>(null);
+  const [sendingId, setSendingId] = useState(0);
+
 
   useEffect(() => {
     loadGroups();
@@ -57,6 +60,7 @@ export default function SendMessage() {
 
     socket.on("send-progress", (data: SendProgress) => {
       setProgressList(prev => [...prev, data]);
+      setSendingId(data.sendingId);
     });
 
     socket.on("send-complete", (data) => {
@@ -65,10 +69,40 @@ export default function SendMessage() {
       setSending(false);
     });
 
+    socket.on("send-stopped", (data) => {
+      setNotification({ message: `⛔ Envío detenido en ${data.stoppedAt}/${data.total}`, type: "info", duration: 5000 });
+      setSending(false);
+      setSendingId(0);
+    });
+
     return () => {
       socket.disconnect();
     };
   }, []);
+
+  async function handleStop() {
+    if (sendingId > 0) {
+      try {
+        const response = await fetchWithToken(`${apiUrl}/messages/stop-send`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ sendingId }),
+        });
+        if (!response) return;
+        const data = await response.json();
+        if (response.ok) {
+          // Opcional: mostrar notificación
+          console.log("✅", data.message);
+        } else {
+          console.error("❌ Error:", data.error);
+        }
+      } catch (err) {
+        console.error("Error en handleStop:", err);
+      }
+      // usa un ID que identifique este envío, puede ser el sendingId real de la DB
+      setNotification({ message: "⛔ Solicitando detener envío...", type: "info", duration: 2000 });
+    }
+  }
 
   async function loadGroups() {
     const res = await fetchWithToken(`${apiUrl}/groups`);
@@ -105,9 +139,10 @@ export default function SendMessage() {
     if (!res) return;
     if (res.ok) {
       const data = await res.json();
+      setSendingId(data.sendingId);
       setNotification({ message: data.message, type: "info", duration: 2000 });
-
     } else {
+      setSending(false);
       setNotification({ message: `Error al enviar mensajes`, type: "error", duration: 2000 });
     }
   }
@@ -142,8 +177,16 @@ export default function SendMessage() {
             ))}
           </select>
         </div>
-        <button type="submit" className="send-button" disabled={sending}>
-          {sending ? "Enviando..." : "Enviar"}
+        <button type="submit" className="send-button" disabled={sending || sendingId > 0}>
+          {sending || sendingId > 0 ? "Enviando..." : "Enviar"}
+        </button>
+        <button
+          type="button"
+          className="stop-button"
+          disabled={sendingId === 0}
+          onClick={handleStop}
+        >
+          Detener Envío
         </button>
       </form>
       {progressList.length > 0 && (
