@@ -36,7 +36,7 @@ const ImportFromExcelModal: React.FC<Props> = ({ onClose, onImport }) => {
 
   return (
     <div className="modal-overlay">
-      <div className="modal modern">
+      <div className="modal-new-contact">
         <div className="modal-header">
           <h2>Importar Miembros desde Excel</h2>
           <button className="modal-close" onClick={onClose}>✖</button>

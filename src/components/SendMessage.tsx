@@ -36,6 +36,7 @@ export default function SendMessage() {
   const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
   const [selectedMessage, setSelectedMessage] = useState<number | null>(null);
   const [sending, setSending] = useState(false);
+  const [sendingTest, setSendingTest] = useState(false);
   const [progressList, setProgressList] = useState<SendProgress[]>([]);
   const [notification, setNotification] = useState<{
     message: string;
@@ -104,6 +105,28 @@ export default function SendMessage() {
     }
   }
 
+  async function sendTestToMyNumber() {
+    if (!selectedMessage) {
+      setNotification({ message: `Selecciona un mensaje.`, type: "info", duration: 2000 });
+      return;
+    }
+
+    setSendingTest(true);
+    const resp = await fetchWithToken(`${apiUrl}/messages/test-send`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messageId: selectedMessage }),
+    });
+    if (!resp) return;
+    const data = await resp.json();
+    if (resp.ok) {
+      setNotification({ message: data.message, type: "info", duration: 2000 });
+    } else {
+      setNotification({ message: data.message, type: "error", duration: 2000 });
+    }
+    setSendingTest(false);
+  }
+
   async function loadGroups() {
     const res = await fetchWithToken(`${apiUrl}/groups`);
     if (!res) return;
@@ -137,13 +160,13 @@ export default function SendMessage() {
       }),
     });
     if (!res) return;
+    const data = await res.json();
     if (res.ok) {
-      const data = await res.json();
       setSendingId(data.sendingId);
       setNotification({ message: data.message, type: "info", duration: 2000 });
     } else {
       setSending(false);
-      setNotification({ message: `Error al enviar mensajes`, type: "error", duration: 2000 });
+      setNotification({ message: data.message, type: "error", duration: 2000 });
     }
   }
 
@@ -154,6 +177,7 @@ export default function SendMessage() {
         <div className="form-group">
           <label>Grupo:</label>
           <select
+            title="Selecciona grupo"
             value={selectedGroup || ""}
             onChange={(e) => setSelectedGroup(Number(e.target.value))}
             required
@@ -167,6 +191,7 @@ export default function SendMessage() {
         <div className="form-group">
           <label>Mensaje:</label>
           <select
+            title="Selecciona mensaje"
             value={selectedMessage || ""}
             onChange={(e) => setSelectedMessage(Number(e.target.value))}
             required
@@ -177,7 +202,14 @@ export default function SendMessage() {
             ))}
           </select>
         </div>
-        <button type="submit" className="send-button" disabled={sending || sendingId > 0}>
+        <button
+          className="test-button"
+          onClick={sendTestToMyNumber}
+          disabled={!selectedMessage || sendingTest || sendingId > 0}
+        >
+          {sendingTest ? "Enviando..." : "Enviar prueba"}
+        </button>
+        <button type="submit" className="send-button" disabled={!selectedGroup || !selectedMessage || sending || sendingId > 0}>
           {sending || sendingId > 0 ? "Enviando..." : "Enviar"}
         </button>
         <button

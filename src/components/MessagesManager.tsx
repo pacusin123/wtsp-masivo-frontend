@@ -131,6 +131,14 @@ export default function MessagesManager() {
       </div>
 
       <table className="message-table">
+        <colgroup>
+          <col style={{ width: "5%" }} />
+          <col style={{ width: "15%" }} />
+          <col style={{ width: "40%" }} />
+          <col style={{ width: "7%" }} />
+          <col style={{ width: "15%" }} />
+          <col style={{ width: "18%" }} />
+        </colgroup>
         <thead>
           <tr>
             <th>ID</th>
@@ -146,7 +154,7 @@ export default function MessagesManager() {
             <tr key={msg.id}>
               <td>{msg.id}</td>
               <td>{msg.title}</td>
-              <td>{msg.message}</td>
+              <td style={{ textAlign: "left" }}>{msg.message}</td>
               <td style={{ textAlign: "center" }}>
                 {msg.image_url ? (
                   <button
@@ -173,39 +181,46 @@ export default function MessagesManager() {
       {showModal && (
         <div className="modal-overlay">
           <div className="modal">
-            <h3>{editingMessageId ? "Editar mensaje" : "Nuevo mensaje"}</h3>
+            <div className="modal-header">
+              <h2>{editingMessageId ? "Editar mensaje" : "Nuevo mensaje"}</h2>
+              <button className="modal-close" onClick={() => setShowModal(false)}>✖</button>
+            </div>
             <form onSubmit={handleSubmit}>
-              <input
-                type="text"
-                placeholder="Título"
-                value={title}
-                required
-                onChange={(e) => setTitle(e.target.value)}
-              />
-              <textarea
-                placeholder="Mensaje"
-                value={msgText}
-                required
-                onChange={(e) => setMsgText(e.target.value)}
-              />
-              <div className="info-message">Agrega @nombre, @variable1, @variable2 o @variable3 para reemplazar en su mensaje</div>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
-                  const selectedFile = e.target.files?.[0];
-                  if (selectedFile && selectedFile.size > 4 * 1024 * 1024) {
-                    setNotification({ message: `La imagen debe ser menor a 4MB.`, type: "error" });
-                    e.target.value = "";
-                    setFile(null);
-                  } else {
-                    setFile(selectedFile || null);
-                  }
-                }}
-              />
-              <div className="modal-actions">
-                <button type="submit">Guardar</button>
-                <button type="button" onClick={() => setShowModal(false)}>Cancelar</button>
+              <div className="modal-body">
+
+                <input
+                  type="text"
+                  placeholder="Título"
+                  value={title}
+                  required
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                <textarea
+                  placeholder="Mensaje"
+                  value={msgText}
+                  required
+                  onChange={(e) => setMsgText(e.target.value)}
+                />
+                <div className="info-message">Agrega @nombre, @variable1, @variable2 o @variable3 para reemplazar en su mensaje</div>
+                <input
+                  title="agregar archivo"
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const selectedFile = e.target.files?.[0];
+                    if (selectedFile && selectedFile.size > 4 * 1024 * 1024) {
+                      setNotification({ message: `La imagen debe ser menor a 4MB.`, type: "error" });
+                      e.target.value = "";
+                      setFile(null);
+                    } else {
+                      setFile(selectedFile || null);
+                    }
+                  }}
+                />
+              </div>
+              <div className="modal-footer">
+                <button className="btn-cancel" type="button" onClick={() => setShowModal(false)}>Cancelar</button>
+                <button className="btn-save" type="submit">Guardar</button>
               </div>
             </form>
           </div>

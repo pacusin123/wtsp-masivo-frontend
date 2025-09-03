@@ -88,7 +88,7 @@ export default function ContactsUpload() {
     const response = await fetchWithToken(`${apiUrl}/groups/${groupToDelete.id}`, {
       method: "DELETE",
     });
-    
+
     if (!response) return;
 
     if (response.ok) {
@@ -107,10 +107,10 @@ export default function ContactsUpload() {
   );
 
   return (
-    <div className="dashboard-container">
-      <div className="dashboard-header">
+    <div className="page-container">
+      <div className="page-header">
         <h2>Grupos</h2>
-        <div className="dashboard-controls">
+        <div className="page-actions">
           <input
             type="text"
             placeholder="Buscar por nombre de grupo"
@@ -128,45 +128,40 @@ export default function ContactsUpload() {
           onClose={() => setNotification(null)}
         />
       )}
-
-      <table className="group-table">
-        <colgroup>
-          <col style={{ width: "10%" }} />
-          <col style={{ width: "60%" }} />
-          <col style={{ width: "30%" }} />
-        </colgroup>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredGroups.map((group) => (
-            <tr key={group.id}>
-              <td>{group.id}</td>
-              <td>{group.name}</td>
-              <td className="actions">
-                <button title="Ver 👁️" onClick={() => openViewModal(group)} style={{ marginRight: "8px" }}>👁️</button>
-                <button title="Editar ✏️" onClick={() => openEditModal(group)} style={{ marginRight: "8px" }}>✏️</button>
-                <button title="Eliminar 🗑️" onClick={() => openDeleteModal(group)}>🗑️</button>
-              </td>
+      <div className="table-body">
+        <table className="table">
+          <colgroup>
+            <col style={{ width: "10%" }} />
+            <col style={{ width: "60%" }} />
+            <col style={{ width: "30%" }} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <div className="pagination">
-        <button disabled>Anterior</button>
-        <span>Página 1 de 1</span>
-        <button disabled>Siguiente</button>
+          </thead>
+          <tbody>
+            {filteredGroups.map((group) => (
+              <tr key={group.id}>
+                <td>{group.id}</td>
+                <td>{group.name}</td>
+                <td className="actions">
+                  <button title="Ver 👁️" onClick={() => openViewModal(group)}>👁️</button>
+                  <button title="Editar ✏️" onClick={() => openEditModal(group)}>✏️</button>
+                  <button title="Eliminar 🗑️" onClick={() => openDeleteModal(group)}>🗑️</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {/* MODAL DE EDICIÓN */}
       {showModal && (
         <div className="modal-overlay">
-          <div className="modal modern">
+          <div className="modal-new-group">
             <div className="modal-header">
               <h2>Editar Grupo</h2>
               <button className="modal-close" onClick={() => setShowModal(false)}>✖</button>

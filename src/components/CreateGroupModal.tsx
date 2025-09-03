@@ -50,7 +50,7 @@ export default function CreateGroupModal({ isOpen, onClose, onGroupCreated }: Pr
 
   return (
     <div className="modal-overlay">
-      <div className="modal modern">
+      <div className="modal-new-group">
         <div className="modal-header">
           <h2>Crear Grupo</h2>
           <button className="modal-close" onClick={onClose}>✖</button>

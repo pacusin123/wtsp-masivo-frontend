@@ -107,10 +107,10 @@ export default function GroupMembersModal({ isOpen, groupId, groupName, onClose 
         }
     }
 
-    async function OpenEditModal(contact: Contact) {
-        setIdContact(contact.id);
-        setNewName(contact.name);
-        setNewPhone(contact.phone);
+    async function OpenEditModal(contact?: Contact) {
+        setIdContact(contact?.id ?? 0);
+        setNewName(contact?.name ?? "");
+        setNewPhone(contact?.phone ?? "");
         setShowAddModal(true);
     }
 
@@ -137,14 +137,14 @@ export default function GroupMembersModal({ isOpen, groupId, groupName, onClose 
 
     return (
         <div className="modal-overlay">
-            <div className="modal modern" style={{ width: "700px", maxHeight: "90vh", overflowY: "auto" }}>
-                <div className="modal-header">
+            <div className="modal-contact">
+                <header className="modal-header">
                     <h2>Miembros de {groupName}</h2>
                     <button className="modal-close" onClick={onClose}>✖</button>
-                </div>
+                </header>
 
                 <div className="modal-body">
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 16 }}>
+                    <div className="filters-bar">
                         <input
                             type="text"
                             placeholder="🔍 Buscar por nombre o teléfono"
@@ -171,7 +171,7 @@ export default function GroupMembersModal({ isOpen, groupId, groupName, onClose 
                             {showDropdown && (
                                 <div className="dropdown-content">
                                     <button onClick={() => {
-                                        setShowAddModal(true);
+                                        OpenEditModal();
                                         setTimeout(() => setShowDropdown(false), 10);
                                     }}>
                                         👤 Individual
@@ -188,60 +188,61 @@ export default function GroupMembersModal({ isOpen, groupId, groupName, onClose 
                                 </div>
                             )}
                         </div>
-
                     </div>
-                    <table className="group-table">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Número de Teléfono</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filtered.map((c) => (
-                                <tr key={c.id}>
-                                    <td>{c.name}</td>
-                                    <td>{c.phone}</td>
-                                    <td className="actions">
-                                        <button title="Editar ✏️" onClick={() => OpenEditModal(c)}>✏️</button>
-                                        <button title="Eliminar 🗑️" onClick={() => DeleteContact(c.id)}>🗑️</button>
-                                    </td>
-                                </tr>
-                            ))}
-                            {filtered.length === 0 && (
+                    <div className="table-scroll">
+                        <table className="table">
+                            <thead>
                                 <tr>
-                                    <td colSpan={3} style={{ textAlign: "center", padding: 16, color: "#aaa" }}>
-                                        No hay coincidencias
-                                    </td>
+                                    <th>Nombre</th>
+                                    <th>Número de Teléfono</th>
+                                    <th>Acciones</th>
                                 </tr>
-                            )}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {filtered.map((c) => (
+                                    <tr key={c.id}>
+                                        <td>{c.name}</td>
+                                        <td>{c.phone}</td>
+                                        <td className="actions">
+                                            <button title="Editar ✏️" onClick={() => OpenEditModal(c)}>✏️</button>
+                                            <button title="Eliminar 🗑️" onClick={() => DeleteContact(c.id)}>🗑️</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                                {filtered.length === 0 && (
+                                    <tr>
+                                        <td colSpan={3} style={{ textAlign: "center", padding: 16, color: "#aaa" }}>
+                                            No hay coincidencias
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-
-                <div className="modal-footer" style={{ justifyContent: "center" }}>
-                    <button disabled>Anterior</button>
-                    <span style={{ margin: "0 12px" }}>Página 1 de 1</span>
-                    <button disabled>Siguiente</button>
+                <div className="modal-footer">
+                    <div className="pager">
+                        <span>Total Contactos: {filtered.length}</span>
+                    </div>
                 </div>
             </div>
 
             {showAddModal && (
                 <div className="modal-overlay">
-                    <div className="modal modern">
+                    <div className="modal-new-contact">
                         <div className="modal-header">
-                            <h2>Agregar Miembro</h2>
+                            <h2>{id && id > 0 ? "Editar" : "Agregar"} Miembro</h2>
                             <button className="modal-close" onClick={() => setShowAddModal(false)}>✖</button>
                         </div>
                         <div className="modal-body">
+                            <label htmlFor="name">Nombre</label>
                             <input
                                 type="text"
                                 placeholder="Nombre"
                                 value={name}
                                 onChange={(e) => setNewName(e.target.value)}
-                                style={{ width: "100%", marginBottom: 12 }}
                             />
+                            <label htmlFor="phone">Teléfono</label>
                             <input
                                 type="text"
                                 inputMode="numeric"
@@ -249,7 +250,6 @@ export default function GroupMembersModal({ isOpen, groupId, groupName, onClose 
                                 pattern="[0-9]*"
                                 value={phone}
                                 onChange={(e) => setNewPhone(e.target.value.replace(/\D/g, ""))}
-                                style={{ width: "100%" }}
                             />
                         </div>
                         <div className="modal-footer">
@@ -284,7 +284,6 @@ export default function GroupMembersModal({ isOpen, groupId, groupName, onClose 
                     }}
                 />
             )}
-
 
             {notification && (
                 <NotificationMessage
